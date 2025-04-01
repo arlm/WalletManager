@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.ksp)
     alias(libs.plugins.navigation.safe.args)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -31,16 +32,21 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+
     kotlinOptions {
         jvmTarget = "17"
     }
+
     buildFeatures {
         viewBinding = true
+        compose = true
     }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -48,23 +54,33 @@ android {
     }
 }
 
+composeCompiler {
+    reportsDestination = layout.buildDirectory.dir("compose_compiler")
+}
+
 dependencies {
+    implementation(kotlin("reflect"))
 
-    implementation(libs.core.ktx)
-    implementation(libs.appcompat)
-    implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.junit.ext)
-    androidTestImplementation(libs.espresso.core)
-    implementation(libs.lifecycle.runtime.ktx)
-    implementation(libs.activity)
-    implementation(libs.constraintlayout)
-    implementation(libs.fragment.ktx)
+    implementation(libs.bundles.android.core)
+    implementation(libs.bundles.android.activity)
+    implementation(libs.bundles.android.navigation)
+    implementation(libs.bundles.android.lifecycle)
 
-    // Navigation
-    implementation(libs.navigation.fragment)
-    implementation(libs.navigation.ui)
+    implementation(libs.bundles.android.material.core)
+    implementation(libs.bundles.android.material.icons)
+    implementation(libs.bundles.android.material.material3)
 
-    // Glide
+    implementation(libs.bundles.android.compose.core)
+    implementation(libs.lifecycle.viewmodel.compose)
+    implementation(libs.compose.livedata)
+    implementation(libs.activity.compose)
+
+    implementation(libs.wear.tooling.preview)
+
+    testImplementation(libs.bundles.tests.core)
+    androidTestImplementation(libs.bundles.android.tests)
+
+    debugImplementation(libs.bundles.android.compose.tooling)
+
     implementation(libs.glide)
 }
