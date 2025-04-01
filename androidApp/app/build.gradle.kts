@@ -74,6 +74,7 @@ dependencies {
     implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.compose.livedata)
     implementation(libs.activity.compose)
+    implementation(libs.splashscreen.core)
 
     implementation(libs.wear.tooling.preview)
 

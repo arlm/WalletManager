@@ -6,4 +6,11 @@
     </style>
 
     <style name="Theme.WalletManager" parent="Base.Theme.WalletManager" />
+    
+    <style name="Theme.WalletSplashscreen" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/icon_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="windowSplashScreenAnimationDuration">750</item>
+        <item name="postSplashScreenTheme">@style/Theme.WalletManager</item>
+    </style>
 </resources>
