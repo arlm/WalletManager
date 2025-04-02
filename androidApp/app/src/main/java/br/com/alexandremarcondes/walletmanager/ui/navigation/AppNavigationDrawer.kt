@@ -93,10 +93,7 @@ fun PreviewMessageCard_Open() {
 @AndroidPhonePreviews
 @Composable
 fun PreviewMessageCard_Closed() {
-
     ApplicationTheme {
-        ApplicationTheme {
-            AppNavigationDrawer(drawerState =rememberDrawerState(initialValue = DrawerValue.Closed))
-        }
+        AppNavigationDrawer(drawerState =rememberDrawerState(initialValue = DrawerValue.Closed))
     }
 }

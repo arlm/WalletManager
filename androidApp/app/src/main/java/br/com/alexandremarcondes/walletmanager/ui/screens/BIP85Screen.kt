@@ -5,12 +5,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerState
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import br.com.alexandremarcondes.walletmanager.ui.navigation.AppBar
+import br.com.alexandremarcondes.walletmanager.ui.theme.AndroidPhonePreviews
+import br.com.alexandremarcondes.walletmanager.ui.theme.ApplicationTheme
 
 @Composable
 fun BIP85Screen(drawerState: DrawerState) {
@@ -27,5 +31,13 @@ fun BIP85Screen(drawerState: DrawerState) {
         ) {
             Text(text = " Child Key Screen")
         }
+    }
+}
+
+@AndroidPhonePreviews
+@Composable
+fun PreviewBIP85Screen() {
+    ApplicationTheme {
+        BIP85Screen(drawerState = rememberDrawerState(initialValue = DrawerValue.Closed))
     }
 }
