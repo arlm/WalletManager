@@ -4,18 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import br.com.alexandremarcondes.walletmanager.ui.theme.AndroidPhonePreviews
+import br.com.alexandremarcondes.walletmanager.ui.navigation.AppNavigationDrawer
 import br.com.alexandremarcondes.walletmanager.ui.theme.ApplicationTheme
 
 class MainActivity : ComponentActivity() {
@@ -24,46 +14,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         installSplashScreen()
-
         enableEdgeToEdge()
 
         setContent {
             ApplicationTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    MessageCard("Android")
-                }
+                AppNavigationDrawer()
             }
-        }
-    }
-}
-
-@Composable
-fun MessageCard(text: String) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            text = text
-        )
-    }
-}
-
-@AndroidPhonePreviews
-@Composable
-fun PreviewMessageCard() {
-    ApplicationTheme {
-        Surface(
-            color = MaterialTheme.colorScheme.background
-        ) {
-            MessageCard("Android")
         }
     }
 }

@@ -28,6 +28,7 @@ fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref
 
 navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation" }
 navigation-ui = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation" }
+navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
 
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glideVersion" }
 
@@ -76,7 +77,7 @@ navigation-safe-args = { id = "androidx.navigation.safeargs.kotlin", version.ref
 [bundles]
 
 android-core = ["core-ktx", "appcompat"]
-android-navigation = ["navigation-fragment", "navigation-ui"]
+android-navigation = ["navigation-fragment", "navigation-ui", "navigation-compose"]
 android-activity = ["fragment-ktx", "activity-core"]
 android-lifecycle = ["lifecycle-runtime-ktx"]
 android-material-core = ["material"]
