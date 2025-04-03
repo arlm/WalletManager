@@ -45,7 +45,6 @@ lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-
 
 compose-material3-core = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
 compose-material3-adaptative = { group = "androidx.compose.material3.adaptive", name = "adaptive", version.ref = "compose-adaptative" }
-compose-material2 = { group = "androidx.compose.material", name = "material", version.ref = "material2" }
 compose-material-icons-core = { group = "androidx.compose.material", name = "material-icons-core", version.ref = "material-icons" }
 compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "material-icons" }
 
@@ -82,7 +81,6 @@ android-activity = ["fragment-ktx", "activity-core"]
 android-lifecycle = ["lifecycle-runtime-ktx"]
 android-material-core = ["material"]
 android-material-material3 = ["compose-material3-core", "compose-material3-adaptative"]
-android-material-material2 = ["compose-material2"]
 android-compose-core = ["compose-foundation", "compose-ui-core", "compose-ui-tooling-preview", "compose-constraintlayout"]
 android-compose-tooling = ["compose-ui-tooling-core", "compose-ui-test-manifest"]
 android-material-icons = ["compose-material-icons-core", "compose-material-icons-extended"]

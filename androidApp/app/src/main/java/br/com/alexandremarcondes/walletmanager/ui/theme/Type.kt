@@ -1,3 +1,5 @@
+@file:Suppress("unused", "SpellCheckingInspection")
+
 package br.com.alexandremarcondes.walletmanager.ui.theme
 
 import androidx.compose.foundation.background

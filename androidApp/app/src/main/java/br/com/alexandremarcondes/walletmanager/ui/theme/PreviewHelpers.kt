@@ -1,11 +1,14 @@
+@file:Suppress("unused")
+
 package br.com.alexandremarcondes.walletmanager.ui.theme
 
 import android.content.res.Configuration
-import android.os.Build
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.Wallpapers
 
+private const val defaultApiLevel = 34
+private const val oldApiLevel = 30
 /**
  * MultiPreview annotation that represents various phone presentation types like dark and light modes,
  * and all dynamic color variations.
@@ -22,7 +25,7 @@ import androidx.compose.ui.tooling.preview.Wallpapers
     backgroundColor = 0xFFFFFF,
     showBackground = true,
     group = "light",
-    apiLevel = 30
+    apiLevel = oldApiLevel
 )
 @Preview(
     name = "Phone Dark",
@@ -32,7 +35,7 @@ import androidx.compose.ui.tooling.preview.Wallpapers
     uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL,
     backgroundColor = 0x000000,
     showBackground = true, group = "dark",
-    apiLevel = 30
+    apiLevel = oldApiLevel
 )
 @Preview(
     name = "Phone Yellow Light",
@@ -43,7 +46,7 @@ import androidx.compose.ui.tooling.preview.Wallpapers
     backgroundColor = 0xebc934,
     showBackground = true,
     group = "light",
-    apiLevel = 31
+    apiLevel = defaultApiLevel
 )
 @Preview(
     name = "Phone Yellow Dark",
@@ -54,7 +57,7 @@ import androidx.compose.ui.tooling.preview.Wallpapers
     backgroundColor = 0xebc934,
     showBackground = true,
     group = "dark",
-    apiLevel = 31
+    apiLevel = defaultApiLevel
 )
 @Preview(
     name = "Phone Blue Light",
@@ -65,7 +68,7 @@ import androidx.compose.ui.tooling.preview.Wallpapers
     backgroundColor = 0x349beb,
     showBackground = true,
     group = "light",
-    apiLevel = 31
+    apiLevel = defaultApiLevel
 )
 @Preview(
     name = "Phone Blue Dark",
@@ -76,7 +79,7 @@ import androidx.compose.ui.tooling.preview.Wallpapers
     backgroundColor = 0x349beb,
     showBackground = true,
     group = "dark",
-    apiLevel = 31
+    apiLevel = defaultApiLevel
 )
 @Preview(
     name = "Phone Green Light",
@@ -87,7 +90,7 @@ import androidx.compose.ui.tooling.preview.Wallpapers
     backgroundColor = 0x34eb83,
     showBackground = true,
     group = "light",
-    apiLevel = 31
+    apiLevel = defaultApiLevel
 )
 @Preview(
     name = "Phone Green Dark",
@@ -98,7 +101,7 @@ import androidx.compose.ui.tooling.preview.Wallpapers
     backgroundColor = 0x34eb83,
     showBackground = true,
     group = "dark",
-    apiLevel = 31
+    apiLevel = defaultApiLevel
 )
 @Preview(
     name = "Phone Red Light",
@@ -109,7 +112,7 @@ import androidx.compose.ui.tooling.preview.Wallpapers
     backgroundColor = 0xf07ab3,
     showBackground = true,
     group = "light",
-    apiLevel = 31
+    apiLevel = defaultApiLevel
 )
 @Preview(
     name = "Phone Red Dark",
@@ -120,7 +123,7 @@ import androidx.compose.ui.tooling.preview.Wallpapers
     backgroundColor = 0xf07ab3,
     showBackground = true,
     group = "dark",
-    apiLevel = 31
+    apiLevel = defaultApiLevel
 )
 annotation class AndroidPhonePreviews
 
@@ -140,7 +143,7 @@ annotation class AndroidPhonePreviews
     backgroundColor = 0xFFFFFF,
     showBackground = true,
     group = "light",
-    apiLevel = 30
+    apiLevel = oldApiLevel
 )
 @Preview(
     name = "Tablet Dark",
@@ -151,7 +154,7 @@ annotation class AndroidPhonePreviews
     backgroundColor = 0x000000,
     showBackground = true,
     group = "dark",
-    apiLevel = 30
+    apiLevel = oldApiLevel
 )
 annotation class AndroidTabletApi30Previews
 
@@ -169,7 +172,7 @@ annotation class AndroidTabletApi30Previews
     backgroundColor = 0xebc934,
     showBackground = true,
     group = "light",
-    apiLevel = 31
+    apiLevel = defaultApiLevel
 )
 @Preview(
     name = "Tablet Yellow Dark",
@@ -180,7 +183,7 @@ annotation class AndroidTabletApi30Previews
     backgroundColor = 0xebc934,
     showBackground = true,
     group = "dark",
-    apiLevel = 31
+    apiLevel = defaultApiLevel
 )
 @Preview(
     name = "Tablet Blue Light",
@@ -191,7 +194,7 @@ annotation class AndroidTabletApi30Previews
     backgroundColor = 0x349beb,
     showBackground = true,
     group = "light",
-    apiLevel = 31
+    apiLevel = defaultApiLevel
 )
 @Preview(
     name = "Tablet Blue Dark",
@@ -202,7 +205,7 @@ annotation class AndroidTabletApi30Previews
     backgroundColor = 0x349beb,
     showBackground = true,
     group = "dark",
-    apiLevel = 31
+    apiLevel = defaultApiLevel
 )
 @Preview(
     name = "Tablet Green Light",
@@ -213,7 +216,7 @@ annotation class AndroidTabletApi30Previews
     backgroundColor = 0x34eb83,
     showBackground = true,
     group = "light",
-    apiLevel = 31
+    apiLevel = defaultApiLevel
 )
 @Preview(
     name = "Tablet Green Dark",
@@ -224,7 +227,7 @@ annotation class AndroidTabletApi30Previews
     backgroundColor = 0x34eb83,
     showBackground = true,
     group = "dark",
-    apiLevel = 31
+    apiLevel = defaultApiLevel
 )
 @Preview(
     name = "Tablet Red Light",
@@ -235,7 +238,7 @@ annotation class AndroidTabletApi30Previews
     backgroundColor = 0xf07ab3,
     showBackground = true,
     group = "light",
-    apiLevel = 31
+    apiLevel = defaultApiLevel
 )
 @Preview(
     name = "Tablet Red Dark",
@@ -246,7 +249,7 @@ annotation class AndroidTabletApi30Previews
     backgroundColor = 0xf07ab3,
     showBackground = true,
     group = "dark",
-    apiLevel = 31
+    apiLevel = defaultApiLevel
 )
 annotation class AndroidTabletApi31Previews
 
@@ -267,7 +270,7 @@ annotation class AndroidTabletPreviews
 @Preview(
     name = "Blue Light",
     wallpaper = Wallpapers.BLUE_DOMINATED_EXAMPLE,
-    apiLevel = Build.VERSION_CODES.S,
+    apiLevel = defaultApiLevel,
     backgroundColor = 0xebc934,
     showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_NO or Configuration.UI_MODE_TYPE_NORMAL
@@ -279,7 +282,7 @@ annotation class LightDynamicBluePreview
 @Preview(
     name = "Yellow Light",
     wallpaper = Wallpapers.YELLOW_DOMINATED_EXAMPLE,
-    apiLevel = Build.VERSION_CODES.S,
+    apiLevel = defaultApiLevel,
     backgroundColor = 0x349beb,
     showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_NO or Configuration.UI_MODE_TYPE_NORMAL
@@ -291,7 +294,7 @@ annotation class LightDynamicYellowPreview
 @Preview(
     name = "Green Light",
     wallpaper = Wallpapers.GREEN_DOMINATED_EXAMPLE,
-    apiLevel = Build.VERSION_CODES.S,
+    apiLevel = defaultApiLevel,
     backgroundColor = 0x34eb83,
     showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_NO or Configuration.UI_MODE_TYPE_NORMAL
@@ -303,7 +306,7 @@ annotation class LightDynamicGreenPreview
 @Preview(
     name = "Red Light",
     wallpaper = Wallpapers.RED_DOMINATED_EXAMPLE,
-    apiLevel = Build.VERSION_CODES.S,
+    apiLevel = defaultApiLevel,
     backgroundColor = 0xf07ab3,
     showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_NO or Configuration.UI_MODE_TYPE_NORMAL
@@ -326,7 +329,7 @@ annotation class LightDynamicColorsPreview
 @Preview(
     name = "Blue Dark",
     wallpaper = Wallpapers.BLUE_DOMINATED_EXAMPLE,
-    apiLevel = Build.VERSION_CODES.S,
+    apiLevel = defaultApiLevel,
     backgroundColor = 0xebc934,
     showBackground = true,
     group = "dark",
@@ -339,7 +342,7 @@ annotation class DarkDynamicBluePreview
 @Preview(
     name = "Yellow Dark",
     wallpaper = Wallpapers.YELLOW_DOMINATED_EXAMPLE,
-    apiLevel = Build.VERSION_CODES.S,
+    apiLevel = defaultApiLevel,
     backgroundColor = 0x349beb,
     showBackground = true,
     group = "dark",
@@ -352,7 +355,7 @@ annotation class DarkDynamicYellowPreview
 @Preview(
     name = "Green Dark",
     wallpaper = Wallpapers.GREEN_DOMINATED_EXAMPLE,
-    apiLevel = Build.VERSION_CODES.S,
+    apiLevel = defaultApiLevel,
     backgroundColor = 0x34eb83,
     showBackground = true,
     group = "dark",
@@ -365,7 +368,7 @@ annotation class DarkDynamicGreenPreview
 @Preview(
     name = "Red Dark",
     wallpaper = Wallpapers.RED_DOMINATED_EXAMPLE,
-    apiLevel = Build.VERSION_CODES.S,
+    apiLevel = defaultApiLevel,
     backgroundColor = 0xf07ab3,
     showBackground = true,
     group = "dark",
@@ -397,7 +400,7 @@ annotation class LightAndDarkDynamicColorsPreview
 @Target(allowedTargets = [AnnotationTarget.ANNOTATION_CLASS, AnnotationTarget.FUNCTION])
 @Preview(
     name = "Light Mode",
-    apiLevel = Build.VERSION_CODES.R,
+    apiLevel = oldApiLevel,
     backgroundColor = 0xFFFFFF,
     showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_NO or Configuration.UI_MODE_TYPE_NORMAL
@@ -408,7 +411,7 @@ annotation class LightModePreview
 @Target(allowedTargets = [AnnotationTarget.ANNOTATION_CLASS, AnnotationTarget.FUNCTION])
 @Preview(
     name = "Light Mode",
-    apiLevel = Build.VERSION_CODES.R,
+    apiLevel = oldApiLevel,
     device = Devices.PIXEL_C,
     showSystemUi = true,
     backgroundColor = 0xFFFFFF,
@@ -421,7 +424,7 @@ annotation class LightModeTabletPreview
 @Target(allowedTargets = [AnnotationTarget.ANNOTATION_CLASS, AnnotationTarget.FUNCTION])
 @Preview(
     name = "Light Mode",
-    apiLevel = Build.VERSION_CODES.R,
+    apiLevel = oldApiLevel,
     device = Devices.NEXUS_6,
     showSystemUi = true,
     backgroundColor = 0xFFFFFF,
@@ -434,7 +437,7 @@ annotation class LightModePhonePreview
 @Target(allowedTargets = [AnnotationTarget.ANNOTATION_CLASS, AnnotationTarget.FUNCTION])
 @Preview(
     name = "Dark Mode",
-    apiLevel = Build.VERSION_CODES.R,
+    apiLevel = oldApiLevel,
     backgroundColor = 0x000000,
     showBackground = true,
     group = "dark",
@@ -446,7 +449,7 @@ annotation class DarkModePreview
 @Target(allowedTargets = [AnnotationTarget.ANNOTATION_CLASS, AnnotationTarget.FUNCTION])
 @Preview(
     name = "Dark Mode",
-    apiLevel = Build.VERSION_CODES.R,
+    apiLevel = oldApiLevel,
     device = Devices.PIXEL_C,
     backgroundColor = 0x000000,
     showBackground = true,
@@ -460,7 +463,7 @@ annotation class DarkModeTabletPreview
 @Target(allowedTargets = [AnnotationTarget.ANNOTATION_CLASS, AnnotationTarget.FUNCTION])
 @Preview(
     name = "Dark Mode",
-    apiLevel = Build.VERSION_CODES.R,
+    apiLevel = oldApiLevel,
     device = Devices.NEXUS_6,
     backgroundColor = 0x000000,
     showBackground = true,
@@ -480,42 +483,43 @@ annotation class DarkModePhonePreview
 annotation class LightAndDarkModesPreview
 
 /**
- * A MultiPreview annotation for displaying a @[Composable] method using the screen sizes of five different reference devices.
+ * A MultiPreview annotation for displaying a @Composable method using the screen sizes of five different reference devices.
  */
 @Retention(AnnotationRetention.BINARY)
 @Target(
     AnnotationTarget.ANNOTATION_CLASS,
     AnnotationTarget.FUNCTION
 )
-@Preview(name = "Phone", device = "spec:width=411dp,height=891dp")
+@Preview(name = "Phone", device = "spec:width=411dp,height=891dp", apiLevel = defaultApiLevel)
 @Preview(
     name = "Phone - Landscape",
-    device = "spec:width=411dp,height=891dp,orientation=landscape,dpi=420"
+    device = "spec:width=411dp,height=891dp,orientation=landscape,dpi=420",
+    apiLevel = defaultApiLevel
 )
-@Preview(name = "Unfolded Foldable", device = "spec:width=673dp,height=841dp")
-@Preview(name = "Tablet", device = "spec:width=1280dp,height=800dp,dpi=240")
-@Preview(name = "Desktop", device = "spec:width=1920dp,height=1080dp,dpi=160")
-@Preview(name = "TV 1080p", device = Devices.TV_1080p)
-@Preview(name = "TV 720p", device = Devices.TV_720p)
+@Preview(name = "Unfolded Foldable", device = "spec:width=673dp,height=841dp", apiLevel = defaultApiLevel)
+@Preview(name = "Tablet", device = "spec:width=1280dp,height=800dp,dpi=240", apiLevel = defaultApiLevel)
+@Preview(name = "Desktop", device = "spec:width=1920dp,height=1080dp,dpi=160", apiLevel = defaultApiLevel)
+@Preview(name = "TV 1080p", device = Devices.TV_1080p, apiLevel = defaultApiLevel)
+@Preview(name = "TV 720p", device = Devices.TV_720p, apiLevel = defaultApiLevel)
 annotation class PreviewScreenSizes
 
 /**
- * A MultiPreview annotation for displaying a @[Composable] method using seven standard font sizes.
+ * A MultiPreview annotation for displaying a @Composable method using seven standard font sizes.
  */
 @Retention(AnnotationRetention.BINARY)
 @Target(
     AnnotationTarget.ANNOTATION_CLASS,
     AnnotationTarget.FUNCTION
 )
-@Preview(name = "50%", fontScale = 0.5f)
-@Preview(name = "85%", fontScale = 0.75f)
-@Preview(name = "85%", fontScale = 0.85f)
-@Preview(name = "100%", fontScale = 1.0f)
-@Preview(name = "115%", fontScale = 1.15f)
-@Preview(name = "125%", fontScale = 1.25f)
-@Preview(name = "130%", fontScale = 1.3f)
-@Preview(name = "150%", fontScale = 1.5f)
-@Preview(name = "175%", fontScale = 1.75f)
-@Preview(name = "180%", fontScale = 1.8f)
-@Preview(name = "200%", fontScale = 2f)
+@Preview(name = "50%", fontScale = 0.5f, apiLevel = defaultApiLevel)
+@Preview(name = "85%", fontScale = 0.75f, apiLevel = defaultApiLevel)
+@Preview(name = "85%", fontScale = 0.85f, apiLevel = defaultApiLevel)
+@Preview(name = "100%", fontScale = 1.0f, apiLevel = defaultApiLevel)
+@Preview(name = "115%", fontScale = 1.15f, apiLevel = defaultApiLevel)
+@Preview(name = "125%", fontScale = 1.25f, apiLevel = defaultApiLevel)
+@Preview(name = "130%", fontScale = 1.3f, apiLevel = defaultApiLevel)
+@Preview(name = "150%", fontScale = 1.5f, apiLevel = defaultApiLevel)
+@Preview(name = "175%", fontScale = 1.75f, apiLevel = defaultApiLevel)
+@Preview(name = "180%", fontScale = 1.8f, apiLevel = defaultApiLevel)
+@Preview(name = "200%", fontScale = 2f, apiLevel = defaultApiLevel)
 annotation class PreviewFontScales

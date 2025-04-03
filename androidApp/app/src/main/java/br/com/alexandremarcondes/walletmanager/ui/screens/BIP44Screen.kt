@@ -13,9 +13,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import br.com.alexandremarcondes.walletmanager.ui.navigation.AppBar
-import br.com.alexandremarcondes.walletmanager.ui.navigation.AppNavigationDrawer
-import br.com.alexandremarcondes.walletmanager.ui.theme.AndroidPhonePreviews
 import br.com.alexandremarcondes.walletmanager.ui.theme.ApplicationTheme
+import br.com.alexandremarcondes.walletmanager.ui.theme.LightAndDarkDynamicColorsPreview
+import br.com.alexandremarcondes.walletmanager.ui.theme.LightAndDarkModesPreview
 
 @Composable
 fun BIP44Screen(drawerState: DrawerState) {
@@ -35,7 +35,8 @@ fun BIP44Screen(drawerState: DrawerState) {
     }
 }
 
-@AndroidPhonePreviews
+@LightAndDarkModesPreview
+@LightAndDarkDynamicColorsPreview
 @Composable
 fun PreviewBIP44Screen() {
     ApplicationTheme {

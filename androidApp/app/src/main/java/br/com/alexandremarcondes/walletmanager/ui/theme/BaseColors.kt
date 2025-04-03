@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package br.com.alexandremarcondes.walletmanager.ui.theme
 
 import androidx.compose.foundation.BorderStroke

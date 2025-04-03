@@ -18,12 +18,11 @@ import br.com.alexandremarcondes.walletmanager.ui.screens.BIP44Screen
 import br.com.alexandremarcondes.walletmanager.ui.screens.BIP49Screen
 import br.com.alexandremarcondes.walletmanager.ui.screens.BIP84Screen
 import br.com.alexandremarcondes.walletmanager.ui.screens.BIP85Screen
-import br.com.alexandremarcondes.walletmanager.ui.theme.AndroidPhonePreviews
-import br.com.alexandremarcondes.walletmanager.ui.theme.ApplicationTheme
+import br.com.alexandremarcondes.walletmanager.ui.screens.MnemonicInputScreen
 import br.com.alexandremarcondes.walletmanager.ui.screens.ScanQRCodeScreen
 import br.com.alexandremarcondes.walletmanager.ui.screens.SeedQRCreationScreen
-import br.com.alexandremarcondes.walletmanager.ui.screens.MnemonicInputScreen
-
+import br.com.alexandremarcondes.walletmanager.ui.theme.AndroidPhonePreviews
+import br.com.alexandremarcondes.walletmanager.ui.theme.ApplicationTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -52,31 +51,31 @@ fun AppNavigationDrawer(
     ) {
         NavHost(navController = navController, startDestination = MainRoute.MnemonicInput.name) {
             composable(MainRoute.MnemonicInput.name) {
-                MnemonicInputScreen(drawerState)
+                MnemonicInputScreen(drawerState = drawerState)
             }
             composable(MainRoute.ScanQRCode.name) {
-                ScanQRCodeScreen(drawerState)
+                ScanQRCodeScreen(drawerState = drawerState)
             }
             composable(MainRoute.SeedQRCreation.name) {
-                SeedQRCreationScreen(drawerState)
+                SeedQRCreationScreen(drawerState = drawerState)
             }
             composable(MainRoute.BIP32.name) {
-                BIP32Screen(drawerState)
+                BIP32Screen(drawerState = drawerState)
             }
             composable(MainRoute.BIP44.name) {
-                BIP44Screen(drawerState)
+                BIP44Screen(drawerState = drawerState)
             }
             composable(MainRoute.BIP49.name) {
-                BIP49Screen(drawerState)
+                BIP49Screen(drawerState = drawerState)
             }
             composable(MainRoute.BIP84.name) {
-                BIP84Screen(drawerState)
+                BIP84Screen(drawerState = drawerState)
             }
             composable(MainRoute.BIP85.name) {
-                BIP85Screen(drawerState)
+                BIP85Screen(drawerState = drawerState)
             }
             composable(MainRoute.BIP141.name) {
-                BIP141Screen(drawerState)
+                BIP141Screen(drawerState = drawerState)
             }
         }
     }
