@@ -1,5 +1,7 @@
 package br.com.alexandremarcondes.walletmanager.ui.screens
 
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -19,9 +22,14 @@ import androidx.compose.material.icons.filled.RestartAlt
 import androidx.compose.material3.Button
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.InputChipDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -46,7 +54,11 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import br.com.alexandremarcondes.walletmanager.bitcoin.bip39.Bip39
+import br.com.alexandremarcondes.walletmanager.data.Bip39Data
+import br.com.alexandremarcondes.walletmanager.data.Memory
 import br.com.alexandremarcondes.walletmanager.ui.components.SuggestionView
 import br.com.alexandremarcondes.walletmanager.ui.components.WordList
 import br.com.alexandremarcondes.walletmanager.ui.navigation.AppBar
@@ -54,7 +66,10 @@ import br.com.alexandremarcondes.walletmanager.ui.theme.ApplicationTheme
 import br.com.alexandremarcondes.walletmanager.ui.theme.LightAndDarkDynamicColorsPreview
 import br.com.alexandremarcondes.walletmanager.ui.theme.LightAndDarkModesPreview
 import br.com.alexandremarcondes.walletmanager.wordlists.englishWordlist
+import br.com.alexandremarcondes.walletmanager.wordlists.portugueseWordlist
+import br.com.alexandremarcondes.walletmanager.wordlists.spanishWordlist
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MnemonicInputScreen(modifier: Modifier = Modifier,
                         drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -66,28 +81,102 @@ fun MnemonicInputScreen(modifier: Modifier = Modifier,
             title = "Mnemonic Input"
         ) }
     ) { paddingValues ->
-        val bip39Dictionary = englishWordlist
         val keyboardController = LocalSoftwareKeyboardController.current
 
-        var wordlist by remember { mutableStateOf(emptyArray<String>()) }
+        var bip39Dictionary by remember { mutableStateOf(englishWordlist) }
+        var wordlist by remember { mutableStateOf(Memory.bip39.wordlist) }
         var value by remember { mutableStateOf(createEmptyValue()) }
         var errorMessage by remember { mutableStateOf("") }
+        var informationMessage by remember { mutableStateOf("") }
         var filteredSuggestions by remember { mutableStateOf(bip39Dictionary.filter { !wordlist.contains(it) }.toTypedArray()) }
         var showSuggestions by remember { mutableStateOf(false) }
+        var expanded by remember { mutableStateOf(false) }
+        var selectedText by remember { mutableStateOf(if (wordlist.isEmpty()) "English" else Bip39.detectLanguage(wordlist)) }
 
         val focusRequester = remember { FocusRequester() }
         val isError by remember { derivedStateOf { errorMessage.isNotEmpty() } }
-        val hasWord by remember { derivedStateOf { value.text.isNotEmpty() } }
-        val isValid by remember { derivedStateOf { hasWord && filteredSuggestions.isNotEmpty() } }
+        val hasInput by remember { derivedStateOf { value.text.isNotEmpty() } }
+        val hasWord by remember { derivedStateOf { wordlist.isNotEmpty() } }
+        val isValidInput by remember { derivedStateOf { hasInput && filteredSuggestions.isNotEmpty() } }
+        val isWordlistSizeValid by remember { derivedStateOf { wordlist.size in 12..24 } }
+        val isWordlistValid by remember { derivedStateOf { wordlist.size % 3 == 0 } }
 
-        Column(
+        LaunchedEffect(isWordlistSizeValid, isWordlistValid, hasWord) {
+            informationMessage =  if (hasWord && isWordlistSizeValid) {
+                if (isWordlistValid) {
+                    if (Bip39.validate(wordlist, bip39Dictionary)) {
+                        ""
+                    } else {
+                        "The words entered form an invalid passphrase"
+                    }
+                } else {
+                    "The word list must be 12, 15, 18, 21 or 24 words long"
+                }
+            } else {
+                ""
+            }
+        }
+
+        Column (
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues),
+                .padding(paddingValues)
+                .scrollable(rememberScrollState(), orientation = Orientation.Vertical, enabled = true),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
             Spacer(modifier = Modifier.height(25.dp))
+
+            ExposedDropdownMenuBox(
+                expanded = expanded,
+                onExpandedChange = { expanded = !expanded }
+            ) {
+                OutlinedTextField(
+                    value = selectedText,
+                    label = { Text("Language") },
+                    onValueChange = {},
+                    readOnly = true,
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                    modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryNotEditable, true)
+                )
+
+                ExposedDropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false }
+                ) {
+                    DropdownMenuItem(
+                        text = { Text(text = "English") },
+                        onClick = {
+                            selectedText = "English"
+                            bip39Dictionary = englishWordlist
+                            expanded = false
+                            wordlist = emptyArray()
+                            filteredSuggestions = filterSuggestions(bip39Dictionary, value.text, wordlist)
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = { Text(text = "Português") },
+                        onClick = {
+                            selectedText = "Português"
+                            bip39Dictionary = portugueseWordlist
+                            expanded = false
+                            wordlist = emptyArray()
+                            filteredSuggestions = filterSuggestions(bip39Dictionary, value.text, wordlist)                        }
+                    )
+                    DropdownMenuItem(
+                        text = { Text(text = "Español") },
+                        onClick = {
+                            selectedText = "Español"
+                            bip39Dictionary = spanishWordlist
+                            expanded = false
+                            wordlist = emptyArray()
+                            filteredSuggestions = filterSuggestions(bip39Dictionary, value.text, wordlist)                        }
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(25.dp))
+
             OutlinedTextField(
                 value = value,
                 label = { Text("Word List") },
@@ -117,7 +206,7 @@ fun MnemonicInputScreen(modifier: Modifier = Modifier,
                 keyboardActions = KeyboardActions( onNext = { 
                     keyboardController?.hide()
 
-                    if (hasWord && filteredSuggestions.size == 1) {
+                    if (hasInput && filteredSuggestions.size == 1) {
                         wordlist = updateWordlist(wordlist, filteredSuggestions.first())
                         value = createEmptyValue()
 
@@ -142,7 +231,7 @@ fun MnemonicInputScreen(modifier: Modifier = Modifier,
                         } else {
                             newValue
                         }
-                        errorMessage = if (isValid || newValue.text == "") {  ""  } else { "Invalid word" }
+                        errorMessage = if (isValidInput || newValue.text == "") {  ""  } else { "Invalid word" }
                     }
 
                     showSuggestions = value.text.isNotEmpty()
@@ -151,8 +240,9 @@ fun MnemonicInputScreen(modifier: Modifier = Modifier,
                     .onKeyEvent { event ->
                         return@onKeyEvent when (event.key.keyCode) {
                             Key.Enter.keyCode, Key.Spacebar.keyCode -> {
-                                if (hasWord && filteredSuggestions.size == 1) {
-                                    filteredSuggestions = filterSuggestions(bip39Dictionary, value.text, wordlist)
+                                if (hasInput && filteredSuggestions.size == 1) {
+                                    filteredSuggestions =
+                                        filterSuggestions(bip39Dictionary, value.text, wordlist)
                                     wordlist = updateWordlist(wordlist, filteredSuggestions.first())
                                     value = createEmptyValue()
 
@@ -163,6 +253,7 @@ fun MnemonicInputScreen(modifier: Modifier = Modifier,
 
                                 true
                             }
+
                             else -> {
                                 false
                             }
@@ -213,13 +304,13 @@ fun MnemonicInputScreen(modifier: Modifier = Modifier,
                     )
                 }
                 Button(
-                    onClick = { process(wordlist) },
-                    enabled = isWordCountOk(wordlist)
+                    onClick = { process(wordlist, bip39Dictionary) },
+                    enabled = Bip39.validate(wordlist, bip39Dictionary)
                 ) {
-                    Text("Input")
+                    Text("Import")
                     Icon(
                         Icons.AutoMirrored.Filled.ArrowRightAlt,
-                        contentDescription = "Input",
+                        contentDescription = "Import",
                         modifier = Modifier.size(InputChipDefaults.AvatarSize)
                     )
                 }
@@ -228,6 +319,17 @@ fun MnemonicInputScreen(modifier: Modifier = Modifier,
             Spacer(modifier = Modifier.height(8.dp))
 
             Text("Word count: ${wordlist.size}")
+
+            if (informationMessage.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Text(informationMessage,
+                    color = MaterialTheme.colorScheme.error,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth().
+                        align(Alignment.CenterHorizontally))
+            }
         }
     }
 }
@@ -259,12 +361,10 @@ private fun updateWordlist(wordlist: Array<String>, value: String )
     wordlist
 }
 
-fun process(wordlist: Array<String>) {
-
+fun process(wordlist: Array<String>, dictionary: Array<String>) {
+    val bip39 = Bip39(wordlist, dictionary)
+    Memory.bip39 = Bip39Data(bip39)
 }
-
-fun isWordCountOk(wordlist: Array<String>): Boolean =
-    (wordlist.size >= 12) && (wordlist.size <= 24) && (wordlist.size % 3 == 0)
 
 @LightAndDarkModesPreview
 @LightAndDarkDynamicColorsPreview
