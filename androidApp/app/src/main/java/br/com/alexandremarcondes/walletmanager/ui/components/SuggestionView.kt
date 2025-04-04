@@ -63,18 +63,17 @@ fun SuggestionView(modifier: Modifier = Modifier,
                 ) {
                     items(
                         items = suggestions,
-                        key = { suggestion -> suggestion } // Using the suggestion string as the key
+                        // Using the suggestion string as the key
+                        key = { suggestion -> suggestion }
                     ) { suggestion ->
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clickable {
-                                    if (!wordlist.contains(suggestion)) {
-                                        onClick(suggestion, wordlist.plus(arrayOf(suggestion)))
+                                    onClick(suggestion, wordlist.plus(arrayOf(suggestion)))
 
-                                        // Hide suggestions after selection
-                                        onHide()
-                                    }
+                                    // Hide suggestions after selection
+                                    onHide()
                                 }
                                 .padding(12.dp)
                         ) {

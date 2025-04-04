@@ -42,13 +42,13 @@ class Bip39(val wordlist: Array<String>, dictionary: Array<String>) {
                 val hashBitArray = CharArray(hash.size * 8)
 
                 for ((index, byte) in hash.withIndex()) {
-                    for (bitIndex in 0..7) {
+                    for (bitIndex in 0..<8) {
                         hashBitArray[index * 8 + bitIndex] =
                             if ((byte and ((1 shl (7 - bitIndex)).toByte())) != 0.toByte()) '1' else '0'
                     }
                 }
 
-                for (index in 0..checksumLength) {
+                for (index in 0..<checksumLength) {
                     if (bitArray[entropyLength + index] != hashBitArray[index])
                         return false
                 }
@@ -81,14 +81,14 @@ class Bip39(val wordlist: Array<String>, dictionary: Array<String>) {
                 val index = dictionary.indexOf(word)
                 if (index < 0) throw Error("word not found: $word")
 
-                for (bitIndex in 0..10) {
+                for (bitIndex in 0..<11) {
                     bitArray[(wordIndex * 11) + bitIndex] =
                         if ((index and (1 shl (10 - bitIndex))) != 0) '1' else '0'
                 }
             }
 
             for (byteIndex in 0..<entropy.size) {
-                for (bitIndex in 0..7) {
+                for (bitIndex in 0..<8) {
                     if (bitArray[(byteIndex * 8) + bitIndex] == '1') {
                         entropy[byteIndex] = entropy[byteIndex] or (1 shl (7 - bitIndex)).toByte()
                     }

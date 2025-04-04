@@ -10,8 +10,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import br.com.alexandremarcondes.walletmanager.MainApp
 import br.com.alexandremarcondes.walletmanager.ui.navigation.AppBar
 import br.com.alexandremarcondes.walletmanager.ui.theme.ApplicationTheme
 import br.com.alexandremarcondes.walletmanager.ui.theme.LightAndDarkDynamicColorsPreview
@@ -19,10 +23,13 @@ import br.com.alexandremarcondes.walletmanager.ui.theme.LightAndDarkModesPreview
 
 @Composable
 fun BIP32Screen(drawerState: DrawerState) {
+    val hasValidSeed by remember { mutableStateOf(MainApp.memory.bip39.isValid) }
+
     Scaffold(
         topBar = { AppBar(
             drawerState = drawerState,
-            title = "HD Wallet"
+            title = "HD Wallet",
+            hasValidSeed = hasValidSeed
         ) }
     ) { paddingValues ->
         Column(

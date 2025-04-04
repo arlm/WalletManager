@@ -29,6 +29,7 @@ import br.com.alexandremarcondes.walletmanager.ui.theme.LightAndDarkModesPreview
 fun WordList(
     modifier: Modifier = Modifier,
     wordlist: Array<String> = emptyArray(),
+    enabled: Boolean = true,
     onRemove: (newWordlist: Array<String>) -> Unit
 ) {
     FlowRow(
@@ -42,6 +43,7 @@ fun WordList(
                 selected = false,
                 label = { Text(item) },
                 onClick = { },
+                enabled = enabled,
                 trailingIcon = {
                     Icon(
                         Icons.Default.Close,

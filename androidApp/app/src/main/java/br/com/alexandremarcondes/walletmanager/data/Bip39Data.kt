@@ -13,6 +13,8 @@ data class Bip39Data(
         seedBits = bip39.seedBits
     )
 
+    val isValid: Boolean = wordlist.isNotEmpty() && seedBits.isNotEmpty()  && seed.isNotEmpty()
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

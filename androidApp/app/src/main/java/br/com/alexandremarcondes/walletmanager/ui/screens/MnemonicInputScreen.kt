@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -56,9 +57,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import br.com.alexandremarcondes.walletmanager.MainApp
 import br.com.alexandremarcondes.walletmanager.bitcoin.bip39.Bip39
 import br.com.alexandremarcondes.walletmanager.data.Bip39Data
-import br.com.alexandremarcondes.walletmanager.data.Memory
 import br.com.alexandremarcondes.walletmanager.ui.components.SuggestionView
 import br.com.alexandremarcondes.walletmanager.ui.components.WordList
 import br.com.alexandremarcondes.walletmanager.ui.navigation.AppBar
@@ -74,21 +75,24 @@ import br.com.alexandremarcondes.walletmanager.wordlists.spanishWordlist
 fun MnemonicInputScreen(modifier: Modifier = Modifier,
                         drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 ) {
+    var hasValidSeed by remember { mutableStateOf(MainApp.memory.bip39.isValid) }
+
     Scaffold(
         modifier = modifier,
         topBar = { AppBar(
             drawerState = drawerState,
-            title = "Mnemonic Input"
+            title = "Mnemonic Input",
+            hasValidSeed = MainApp.memory.bip39.isValid
         ) }
     ) { paddingValues ->
         val keyboardController = LocalSoftwareKeyboardController.current
 
         var bip39Dictionary by remember { mutableStateOf(englishWordlist) }
-        var wordlist by remember { mutableStateOf(Memory.bip39.wordlist) }
+        var wordlist by remember { mutableStateOf(MainApp.memory.bip39.wordlist) }
         var value by remember { mutableStateOf(createEmptyValue()) }
         var errorMessage by remember { mutableStateOf("") }
         var informationMessage by remember { mutableStateOf("") }
-        var filteredSuggestions by remember { mutableStateOf(bip39Dictionary.filter { !wordlist.contains(it) }.toTypedArray()) }
+        var filteredSuggestions by remember { mutableStateOf(bip39Dictionary) }
         var showSuggestions by remember { mutableStateOf(false) }
         var expanded by remember { mutableStateOf(false) }
         var selectedText by remember { mutableStateOf(if (wordlist.isEmpty()) "English" else Bip39.detectLanguage(wordlist)) }
@@ -136,13 +140,17 @@ fun MnemonicInputScreen(modifier: Modifier = Modifier,
                     label = { Text("Language") },
                     onValueChange = {},
                     readOnly = true,
+                    enabled = !hasValidSeed,
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-                    modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryNotEditable, true)
+                    modifier = Modifier.menuAnchor(
+                        MenuAnchorType.PrimaryNotEditable,
+                        enabled = !hasValidSeed,
+                    )
                 )
 
                 ExposedDropdownMenu(
                     expanded = expanded,
-                    onDismissRequest = { expanded = false }
+                    onDismissRequest = { expanded = false },
                 ) {
                     DropdownMenuItem(
                         text = { Text(text = "English") },
@@ -151,8 +159,9 @@ fun MnemonicInputScreen(modifier: Modifier = Modifier,
                             bip39Dictionary = englishWordlist
                             expanded = false
                             wordlist = emptyArray()
-                            filteredSuggestions = filterSuggestions(bip39Dictionary, value.text, wordlist)
-                        }
+                            filteredSuggestions = filterSuggestions(bip39Dictionary, value.text)
+                        },
+                        enabled = !hasValidSeed
                     )
                     DropdownMenuItem(
                         text = { Text(text = "Português") },
@@ -161,7 +170,9 @@ fun MnemonicInputScreen(modifier: Modifier = Modifier,
                             bip39Dictionary = portugueseWordlist
                             expanded = false
                             wordlist = emptyArray()
-                            filteredSuggestions = filterSuggestions(bip39Dictionary, value.text, wordlist)                        }
+                            filteredSuggestions = filterSuggestions(bip39Dictionary, value.text)
+                        },
+                        enabled = !hasValidSeed
                     )
                     DropdownMenuItem(
                         text = { Text(text = "Español") },
@@ -170,7 +181,9 @@ fun MnemonicInputScreen(modifier: Modifier = Modifier,
                             bip39Dictionary = spanishWordlist
                             expanded = false
                             wordlist = emptyArray()
-                            filteredSuggestions = filterSuggestions(bip39Dictionary, value.text, wordlist)                        }
+                            filteredSuggestions = filterSuggestions(bip39Dictionary, value.text)
+                        },
+                        enabled = !hasValidSeed,
                     )
                 }
             }
@@ -183,6 +196,7 @@ fun MnemonicInputScreen(modifier: Modifier = Modifier,
                 placeholder = { Text("Enter your mnemonic words here") },
                 singleLine = true,
                 isError = isError,
+                enabled = !hasValidSeed,
                 supportingText = {
                     if (isError) {
                         Text(
@@ -219,7 +233,7 @@ fun MnemonicInputScreen(modifier: Modifier = Modifier,
                     if (newValue.text.isEmpty()) {
                         errorMessage = ""
                     } else {
-                        filteredSuggestions = filterSuggestions(bip39Dictionary, newValue.text, wordlist)
+                        filteredSuggestions = filterSuggestions(bip39Dictionary, newValue.text)
                     }
 
                     if (newValue.text != value.text) {
@@ -242,7 +256,7 @@ fun MnemonicInputScreen(modifier: Modifier = Modifier,
                             Key.Enter.keyCode, Key.Spacebar.keyCode -> {
                                 if (hasInput && filteredSuggestions.size == 1) {
                                     filteredSuggestions =
-                                        filterSuggestions(bip39Dictionary, value.text, wordlist)
+                                        filterSuggestions(bip39Dictionary, value.text)
                                     wordlist = updateWordlist(wordlist, filteredSuggestions.first())
                                     value = createEmptyValue()
 
@@ -267,7 +281,7 @@ fun MnemonicInputScreen(modifier: Modifier = Modifier,
                 focusRequester.requestFocus()
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(4.dp))
 
             SuggestionView(
                 modifier = Modifier
@@ -277,46 +291,14 @@ fun MnemonicInputScreen(modifier: Modifier = Modifier,
                 wordlist = wordlist,
                 suggestions = filteredSuggestions,
                 onHide = { showSuggestions = false }
-            ) { word, newWordlist ->
+            ) { _, newWordlist ->
                 wordlist = newWordlist
-                filteredSuggestions = filteredSuggestions.filter { it != word }.toTypedArray()
                 value = createEmptyValue()
             }
 
             if (showSuggestions) {
                 Spacer(modifier = Modifier.height(8.dp))
             }
-
-            WordList( wordlist = wordlist) { newWordlist -> wordlist = newWordlist }
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                Button(
-                    onClick = { wordlist = emptyArray() },
-                    enabled = wordlist.isNotEmpty()
-                ) {
-                    Text("Reset")
-                    Icon(
-                        Icons.Default.RestartAlt,
-                        contentDescription = "Reset",
-                        modifier = Modifier.size(InputChipDefaults.AvatarSize)
-                    )
-                }
-                Button(
-                    onClick = { process(wordlist, bip39Dictionary) },
-                    enabled = Bip39.validate(wordlist, bip39Dictionary)
-                ) {
-                    Text("Import")
-                    Icon(
-                        Icons.AutoMirrored.Filled.ArrowRightAlt,
-                        contentDescription = "Import",
-                        modifier = Modifier.size(InputChipDefaults.AvatarSize)
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.height(8.dp))
 
             Text("Word count: ${wordlist.size}")
 
@@ -330,6 +312,43 @@ fun MnemonicInputScreen(modifier: Modifier = Modifier,
                         .fillMaxWidth().
                         align(Alignment.CenterHorizontally))
             }
+
+            WordList(
+                wordlist = wordlist,
+                enabled = !hasValidSeed
+            ) { newWordlist -> wordlist = newWordlist }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                Button(
+                    onClick = { wordlist = emptyArray() },
+                    enabled = !hasValidSeed && wordlist.isNotEmpty()
+                ) {
+                    Text("Reset")
+                    Icon(
+                        Icons.Default.RestartAlt,
+                        contentDescription = "Reset",
+                        modifier = Modifier.size(InputChipDefaults.AvatarSize)
+                    )
+                }
+                Button(
+                    onClick = {
+                        process(wordlist, bip39Dictionary)
+                        hasValidSeed = true
+                    },
+                    enabled = !hasValidSeed && Bip39.validate(wordlist, bip39Dictionary)
+                ) {
+                    Text("Import")
+                    Icon(
+                        Icons.AutoMirrored.Filled.ArrowRightAlt,
+                        contentDescription = "Import",
+                        modifier = Modifier.size(InputChipDefaults.AvatarSize)
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.imePadding())
         }
     }
 }
@@ -337,14 +356,11 @@ fun MnemonicInputScreen(modifier: Modifier = Modifier,
 private fun filterSuggestions(
     suggestions: Array<String>,
     value: String,
-    wordlist: Array<String>
 ) = if (value.trim().isEmpty()) {
     suggestions
 } else {
     suggestions
-        .filter {
-            !wordlist.contains(it) && it.startsWith(value.trim(), ignoreCase = true)
-        }
+        .filter { it.startsWith(value.trim(), ignoreCase = true) }
         .toTypedArray()
 }
 
@@ -363,7 +379,7 @@ private fun updateWordlist(wordlist: Array<String>, value: String )
 
 fun process(wordlist: Array<String>, dictionary: Array<String>) {
     val bip39 = Bip39(wordlist, dictionary)
-    Memory.bip39 = Bip39Data(bip39)
+    MainApp.memory.bip39 = Bip39Data(bip39)
 }
 
 @LightAndDarkModesPreview

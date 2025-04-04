@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.WindowCompat
 import br.com.alexandremarcondes.walletmanager.ui.navigation.AppNavigationDrawer
 import br.com.alexandremarcondes.walletmanager.ui.theme.ApplicationTheme
 
@@ -15,6 +16,8 @@ class MainActivity : ComponentActivity() {
 
         installSplashScreen()
         enableEdgeToEdge()
+
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
             ApplicationTheme {
