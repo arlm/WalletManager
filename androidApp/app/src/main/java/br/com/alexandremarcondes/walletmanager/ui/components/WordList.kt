@@ -38,7 +38,7 @@ fun WordList(
         verticalArrangement = Arrangement.Top,
         maxItemsInEachRow = 3
     ) {
-        wordlist.forEach { item ->
+        wordlist.forEachIndexed { index, item ->
             InputChip(
                 selected = false,
                 label = { Text(item) },
@@ -51,9 +51,9 @@ fun WordList(
                         modifier = Modifier
                             .size(InputChipDefaults.AvatarSize)
                             .clickable {
-                                if (wordlist.contains(item)) {
-                                    onRemove(wordlist.filter { it != item }.toTypedArray())
-                                }
+                                val arrayList = wordlist.toCollection(ArrayList())
+                                arrayList.removeAt(index)
+                                onRemove(arrayList.toTypedArray())
                             }
                     )
                 }
