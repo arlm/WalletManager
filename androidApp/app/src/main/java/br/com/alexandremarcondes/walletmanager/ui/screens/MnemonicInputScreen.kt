@@ -1,5 +1,6 @@
 package br.com.alexandremarcondes.walletmanager.ui.screens
 
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -47,6 +48,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
@@ -309,7 +311,20 @@ fun MnemonicInputScreen(modifier: Modifier = Modifier,
                     Spacer(modifier = Modifier.height(8.dp))
                 }
 
-                Text("Word count: ${wordlist.size}")
+                Text("Word count: ${wordlist.size}",
+                    modifier = Modifier.pointerInput(Unit) {
+                        detectTapGestures(onDoubleTap = { wordlist = arrayOf(
+                                "abandon", "abandon", "abandon", "abandon", "abandon", "abandon", "abandon", "abandon",
+                                "abandon", "abandon", "abandon", "abandon", "abandon", "abandon", "abandon", "abandon",
+                                "abandon", "abandon", "abandon", "abandon", "abandon", "abandon", "abandon", "art",
+                            )
+
+                            process(wordlist, bip39Dictionary)
+                            hasValidSeed = true
+                            errorMessage = ""
+                            informationMessage = ""}
+                        )
+                    })
 
                 if (informationMessage.isNotEmpty()) {
                     Spacer(modifier = Modifier.height(8.dp))

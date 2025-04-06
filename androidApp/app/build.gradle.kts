@@ -76,15 +76,12 @@ dependencies {
     implementation(libs.activity.compose)
     implementation(libs.splashscreen.core)
 
-    implementation(libs.wear.tooling.preview)
-
     testImplementation(libs.bundles.tests.core)
     androidTestImplementation(libs.bundles.android.tests)
 
     debugImplementation(libs.bundles.android.compose.tooling)
 
     implementation(libs.glide)
-
     implementation(libs.bouncycastle)
-
+    implementation(libs.zxing.core)
 }
