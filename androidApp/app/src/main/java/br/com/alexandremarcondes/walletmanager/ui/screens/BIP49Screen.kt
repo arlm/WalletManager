@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import br.com.alexandremarcondes.walletmanager.MainApp
 import br.com.alexandremarcondes.walletmanager.data.Memory
+import br.com.alexandremarcondes.walletmanager.ui.components.KeyboardAware
 import br.com.alexandremarcondes.walletmanager.ui.navigation.AppBar
 import br.com.alexandremarcondes.walletmanager.ui.theme.ApplicationTheme
 import br.com.alexandremarcondes.walletmanager.ui.theme.LightAndDarkDynamicColorsPreview
@@ -33,12 +34,14 @@ fun BIP49Screen(drawerState: DrawerState) {
             hasValidSeed = hasValidSeed
         ) }
     ) { paddingValues ->
-        Column(
-            modifier = Modifier.fillMaxSize().padding(paddingValues),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(text = "P2WPKH-nested-in-P2SH Accounts Screen")
+        KeyboardAware () {
+            Column(
+                modifier = Modifier.fillMaxSize().padding(paddingValues),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(text = "P2WPKH-nested-in-P2SH Accounts Screen")
+            }
         }
     }
 }

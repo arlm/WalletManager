@@ -8,10 +8,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircleOutline
@@ -54,35 +53,29 @@ fun SuggestionView(modifier: Modifier = Modifier,
                     MaterialTheme.colorScheme.background,
                     shape = RoundedCornerShape(8.dp)
                 )
-                .animateContentSize()
+                .heightIn(0.dp, 140.dp)
+                .animateContentSize(),
+            horizontalAlignment = Alignment.Start
+
         ) {
             if (suggestions.isNotEmpty()) {
-                LazyColumn(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.Start
-                ) {
-                    items(
-                        items = suggestions,
-                        // Using the suggestion string as the key
-                        key = { suggestion -> suggestion }
-                    ) { suggestion ->
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable {
-                                    onClick(suggestion, wordlist.plus(arrayOf(suggestion)))
+                suggestions.forEach { suggestion ->
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                onClick(suggestion, wordlist.plus(arrayOf(suggestion)))
 
-                                    // Hide suggestions after selection
-                                    onHide()
-                                }
-                                .padding(12.dp)
-                        ) {
-                            Text(
-                                text = suggestion,
-                                style = TextStyle(fontSize = 18.sp),
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        }
+                                // Hide suggestions after selection
+                                onHide()
+                            }
+                            .padding(12.dp)
+                    ) {
+                        Text(
+                            text = suggestion,
+                            style = TextStyle(fontSize = 18.sp),
+                            modifier = Modifier.fillMaxWidth()
+                        )
                     }
                 }
             } else {
@@ -107,7 +100,7 @@ fun PreviewSuggestionView() {
 
         Column {
             SuggestionView(
-                suggestions = englishWordlist.filter { it.startsWith("aba") }.toTypedArray(),
+                suggestions = englishWordlist.filter { it.startsWith("ab") }.toTypedArray(),
                 visible = visibility,
                 onHide = { visibility = false }
             ) { suggestion, _ ->

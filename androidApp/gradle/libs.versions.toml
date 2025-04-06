@@ -21,6 +21,7 @@ navigation = "2.8.9"
 compose-adaptative = "1.1.0"
 compose-core = "1.7.8"
 wearToolingPreview = "1.0.0"
+bouncycastle = "1.70"
 
 [libraries]
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
@@ -63,6 +64,7 @@ espresso-core = { group = "androidx.test.espresso", name = "espresso-core", vers
 compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4", version.ref = "compose-core" }
 compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest", version.ref = "compose-core" }
 wear-tooling-preview = { group = "androidx.wear", name = "wear-tooling-preview", version.ref = "wearToolingPreview" }
+bouncycastle = { group = "org.bouncycastle", name = "bcprov-jdk15on", version.ref = "bouncycastle" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

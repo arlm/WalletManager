@@ -67,7 +67,7 @@ fun WordList(
 @Composable
 fun PreviewWordList() {
     ApplicationTheme {
-        var wordlist by remember { mutableStateOf(arrayOf("abandon", "test")) }
+        var wordlist by remember { mutableStateOf(arrayOf("abandon", "test", "abandon", "test")) }
         Column {
             WordList( wordlist = wordlist) { newWordlist -> wordlist = newWordlist }
 

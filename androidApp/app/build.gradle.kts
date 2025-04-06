@@ -84,4 +84,7 @@ dependencies {
     debugImplementation(libs.bundles.android.compose.tooling)
 
     implementation(libs.glide)
+
+    implementation(libs.bouncycastle)
+
 }

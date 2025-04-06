@@ -1,11 +1,11 @@
 package br.com.alexandremarcondes.walletmanager.data
 
-import br.com.alexandremarcondes.walletmanager.bitcoin.bip39.Bip39
+import br.com.alexandremarcondes.walletmanager.bitcoin.Bip39
 
 data class Bip39Data(
     val wordlist: Array<String> = emptyArray(),
     val seedBits: CharArray = CharArray(0),
-    val seed: Array<Byte> = emptyArray()
+    val seed: ByteArray = ByteArray(0)
 ) {
     constructor(bip39: Bip39) : this(
         wordlist = bip39.wordlist,

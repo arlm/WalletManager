@@ -16,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import br.com.alexandremarcondes.walletmanager.MainApp
+import br.com.alexandremarcondes.walletmanager.ui.components.KeyboardAware
 import br.com.alexandremarcondes.walletmanager.ui.navigation.AppBar
 import br.com.alexandremarcondes.walletmanager.ui.theme.ApplicationTheme
 import br.com.alexandremarcondes.walletmanager.ui.theme.LightAndDarkDynamicColorsPreview
@@ -32,12 +33,14 @@ fun BIP44Screen(drawerState: DrawerState) {
             hasValidSeed = hasValidSeed
         ) }
     ) { paddingValues ->
-        Column(
-            modifier = Modifier.fillMaxSize().padding(paddingValues),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(text = "Accounts Screen")
+        KeyboardAware() {
+            Column(
+                modifier = Modifier.fillMaxSize().padding(paddingValues),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(text = "Accounts Screen")
+            }
         }
     }
 }

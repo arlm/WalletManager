@@ -1,4 +1,4 @@
-package br.com.alexandremarcondes.walletmanager.bitcoin.bip39
+package br.com.alexandremarcondes.walletmanager.bitcoin
 
 import br.com.alexandremarcondes.walletmanager.wordlists.englishWordlist
 import br.com.alexandremarcondes.walletmanager.wordlists.portugueseWordlist
@@ -9,7 +9,7 @@ import kotlin.experimental.and
 import kotlin.experimental.or
 
 class Bip39(val wordlist: Array<String>, dictionary: Array<String>) {
-    val seed: Array<Byte>
+    val seed: ByteArray
     val seedBits: CharArray
 
     init {
@@ -20,7 +20,7 @@ class Bip39(val wordlist: Array<String>, dictionary: Array<String>) {
         val entropyLength = bitLength - checksumLength
 
         val (entropy, bitArray) = extractEntropy(entropyLength, bitLength, wordlist, dictionary)
-        this.seed = entropy.toTypedArray()
+        this.seed = entropy
         this.seedBits = bitArray
     }
 
@@ -38,7 +38,7 @@ class Bip39(val wordlist: Array<String>, dictionary: Array<String>) {
                 val (entropy, bitArray) = extractEntropy(entropyLength, bitLength, wordlist, dictionary)
 
                 val md = MessageDigest.getInstance("SHA-256")
-                val hash = md.digest(entropy.toByteArray())
+                val hash = md.digest(entropy)
                 val hashBitArray = CharArray(hash.size * 8)
 
                 for ((index, byte) in hash.withIndex()) {
@@ -73,7 +73,7 @@ class Bip39(val wordlist: Array<String>, dictionary: Array<String>) {
             bitLength: Int,
             wordlist: Array<String>,
             dictionary: Array<String>
-        ): Pair<MutableList<Byte>, CharArray> {
+        ): Pair<ByteArray, CharArray> {
             val entropy = MutableList<Byte>(entropyLength / 8) { 0 }
             val bitArray = CharArray(bitLength)
 
@@ -95,7 +95,7 @@ class Bip39(val wordlist: Array<String>, dictionary: Array<String>) {
                 }
             }
 
-            return Pair(entropy, bitArray)
+            return Pair(entropy.toByteArray(), bitArray)
         }
     }
 }

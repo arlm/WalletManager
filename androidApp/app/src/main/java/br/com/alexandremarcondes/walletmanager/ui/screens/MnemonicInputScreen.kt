@@ -1,7 +1,5 @@
 package br.com.alexandremarcondes.walletmanager.ui.screens
 
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,12 +8,12 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowRightAlt
 import androidx.compose.material.icons.filled.Error
@@ -58,8 +56,9 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import br.com.alexandremarcondes.walletmanager.MainApp
-import br.com.alexandremarcondes.walletmanager.bitcoin.bip39.Bip39
+import br.com.alexandremarcondes.walletmanager.bitcoin.Bip39
 import br.com.alexandremarcondes.walletmanager.data.Bip39Data
+import br.com.alexandremarcondes.walletmanager.ui.components.KeyboardAware
 import br.com.alexandremarcondes.walletmanager.ui.components.SuggestionView
 import br.com.alexandremarcondes.walletmanager.ui.components.WordList
 import br.com.alexandremarcondes.walletmanager.ui.navigation.AppBar
@@ -78,11 +77,11 @@ fun MnemonicInputScreen(modifier: Modifier = Modifier,
     var hasValidSeed by remember { mutableStateOf(MainApp.memory.bip39.isValid) }
 
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.fillMaxSize(),
         topBar = { AppBar(
             drawerState = drawerState,
             title = "Mnemonic Input",
-            hasValidSeed = MainApp.memory.bip39.isValid
+            hasValidSeed = hasValidSeed
         ) }
     ) { paddingValues ->
         val keyboardController = LocalSoftwareKeyboardController.current
@@ -120,235 +119,250 @@ fun MnemonicInputScreen(modifier: Modifier = Modifier,
                 ""
             }
         }
-
-        Column (
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .scrollable(rememberScrollState(), orientation = Orientation.Vertical, enabled = true),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top
-        ) {
-            Spacer(modifier = Modifier.height(25.dp))
-
-            ExposedDropdownMenuBox(
-                expanded = expanded,
-                onExpandedChange = { expanded = !expanded }
+        KeyboardAware {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .verticalScroll(rememberScrollState(), enabled = true),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Top
             ) {
-                OutlinedTextField(
-                    value = selectedText,
-                    label = { Text("Language") },
-                    onValueChange = {},
-                    readOnly = true,
-                    enabled = !hasValidSeed,
-                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-                    modifier = Modifier.menuAnchor(
-                        MenuAnchorType.PrimaryNotEditable,
-                        enabled = !hasValidSeed,
-                    )
-                )
+                Spacer(modifier = Modifier.height(25.dp))
 
-                ExposedDropdownMenu(
+                ExposedDropdownMenuBox(
                     expanded = expanded,
-                    onDismissRequest = { expanded = false },
+                    onExpandedChange = { expanded = !expanded }
                 ) {
-                    DropdownMenuItem(
-                        text = { Text(text = "English") },
-                        onClick = {
-                            selectedText = "English"
-                            bip39Dictionary = englishWordlist
-                            expanded = false
-                            wordlist = emptyArray()
-                            filteredSuggestions = filterSuggestions(bip39Dictionary, value.text)
-                        },
-                        enabled = !hasValidSeed
-                    )
-                    DropdownMenuItem(
-                        text = { Text(text = "Português") },
-                        onClick = {
-                            selectedText = "Português"
-                            bip39Dictionary = portugueseWordlist
-                            expanded = false
-                            wordlist = emptyArray()
-                            filteredSuggestions = filterSuggestions(bip39Dictionary, value.text)
-                        },
-                        enabled = !hasValidSeed
-                    )
-                    DropdownMenuItem(
-                        text = { Text(text = "Español") },
-                        onClick = {
-                            selectedText = "Español"
-                            bip39Dictionary = spanishWordlist
-                            expanded = false
-                            wordlist = emptyArray()
-                            filteredSuggestions = filterSuggestions(bip39Dictionary, value.text)
-                        },
+                    OutlinedTextField(
+                        value = selectedText,
+                        label = { Text("Language") },
+                        onValueChange = {},
+                        readOnly = true,
                         enabled = !hasValidSeed,
+                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                        modifier = Modifier.menuAnchor(
+                            MenuAnchorType.PrimaryNotEditable,
+                            enabled = !hasValidSeed,
+                        )
                     )
-                }
-            }
 
-            Spacer(modifier = Modifier.height(25.dp))
-
-            OutlinedTextField(
-                value = value,
-                label = { Text("Word List") },
-                placeholder = { Text("Enter your mnemonic words here") },
-                singleLine = true,
-                isError = isError,
-                enabled = !hasValidSeed,
-                supportingText = {
-                    if (isError) {
-                        Text(
-                            modifier = Modifier.fillMaxWidth(),
-                            text = errorMessage,
-                            color = MaterialTheme.colorScheme.error
+                    ExposedDropdownMenu(
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false },
+                    ) {
+                        DropdownMenuItem(
+                            text = { Text(text = "English") },
+                            onClick = {
+                                selectedText = "English"
+                                bip39Dictionary = englishWordlist
+                                expanded = false
+                                wordlist = emptyArray()
+                                filteredSuggestions = filterSuggestions(bip39Dictionary, value.text)
+                            },
+                            enabled = !hasValidSeed
+                        )
+                        DropdownMenuItem(
+                            text = { Text(text = "Português") },
+                            onClick = {
+                                selectedText = "Português"
+                                bip39Dictionary = portugueseWordlist
+                                expanded = false
+                                wordlist = emptyArray()
+                                filteredSuggestions = filterSuggestions(bip39Dictionary, value.text)
+                            },
+                            enabled = !hasValidSeed
+                        )
+                        DropdownMenuItem(
+                            text = { Text(text = "Español") },
+                            onClick = {
+                                selectedText = "Español"
+                                bip39Dictionary = spanishWordlist
+                                expanded = false
+                                wordlist = emptyArray()
+                                filteredSuggestions = filterSuggestions(bip39Dictionary, value.text)
+                            },
+                            enabled = !hasValidSeed,
                         )
                     }
-                },
-                trailingIcon = {
-                    if (isError)
-                        Icon(Icons.Filled.Error,"error", tint = MaterialTheme.colorScheme.error)
-                },
-                keyboardOptions = KeyboardOptions(
-                    capitalization = KeyboardCapitalization.None,
-                    autoCorrectEnabled = true,
-                    keyboardType = KeyboardType.Text,
-                    imeAction = ImeAction.Next,
-                    showKeyboardOnFocus = true
-                ),
-                keyboardActions = KeyboardActions( onNext = { 
-                    keyboardController?.hide()
+                }
 
-                    if (hasInput && filteredSuggestions.size == 1) {
-                        wordlist = updateWordlist(wordlist, filteredSuggestions.first())
-                        value = createEmptyValue()
+                Spacer(modifier = Modifier.height(25.dp))
 
-                        showSuggestions = false
-                    } else {
-                        errorMessage = "Invalid word"
-                    }
-                }),
-                onValueChange = { newValue ->
-                    if (newValue.text.isEmpty()) {
-                        errorMessage = ""
-                    } else {
-                        filteredSuggestions = filterSuggestions(bip39Dictionary, newValue.text)
-                    }
-
-                    if (newValue.text != value.text) {
-                        value = if (newValue.text.endsWith(" ") && filteredSuggestions.size > 1) {
-                            TextFieldValue(
-                                text = newValue.text.trim(),
-                                selection = TextRange(newValue.text.length - 1)
+                OutlinedTextField(
+                    value = value,
+                    label = { Text("Word List") },
+                    placeholder = { Text("Enter your mnemonic words here") },
+                    singleLine = true,
+                    isError = isError,
+                    enabled = !hasValidSeed,
+                    supportingText = {
+                        if (isError) {
+                            Text(
+                                modifier = Modifier.fillMaxWidth(),
+                                text = errorMessage,
+                                color = MaterialTheme.colorScheme.error
                             )
-                        } else {
-                            newValue
                         }
-                        errorMessage = if (isValidInput || newValue.text == "") {  ""  } else { "Invalid word" }
-                    }
+                    },
+                    trailingIcon = {
+                        if (isError)
+                            Icon(
+                                Icons.Filled.Error,
+                                "error",
+                                tint = MaterialTheme.colorScheme.error
+                            )
+                    },
+                    keyboardOptions = KeyboardOptions(
+                        capitalization = KeyboardCapitalization.None,
+                        autoCorrectEnabled = true,
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Next,
+                        showKeyboardOnFocus = true
+                    ),
+                    keyboardActions = KeyboardActions(onNext = {
+                        keyboardController?.hide()
 
-                    showSuggestions = value.text.isNotEmpty()
-                },
-                modifier = Modifier
-                    .onKeyEvent { event ->
-                        return@onKeyEvent when (event.key.keyCode) {
-                            Key.Enter.keyCode, Key.Spacebar.keyCode -> {
-                                if (hasInput && filteredSuggestions.size == 1) {
-                                    filteredSuggestions =
-                                        filterSuggestions(bip39Dictionary, value.text)
-                                    wordlist = updateWordlist(wordlist, filteredSuggestions.first())
-                                    value = createEmptyValue()
+                        if (hasInput && filteredSuggestions.size == 1) {
+                            wordlist = updateWordlist(wordlist, filteredSuggestions.first())
+                            value = createEmptyValue()
 
-                                    showSuggestions = false
+                            showSuggestions = false
+                        } else {
+                            errorMessage = "Invalid word"
+                        }
+                    }),
+                    onValueChange = { newValue ->
+                        if (newValue.text.isEmpty()) {
+                            errorMessage = ""
+                        } else {
+                            filteredSuggestions = filterSuggestions(bip39Dictionary, newValue.text)
+                        }
+
+                        if (newValue.text != value.text) {
+                            value =
+                                if (newValue.text.endsWith(" ") && filteredSuggestions.size > 1) {
+                                    TextFieldValue(
+                                        text = newValue.text.trim(),
+                                        selection = TextRange(newValue.text.length - 1)
+                                    )
                                 } else {
-                                    errorMessage = "Invalid word"
+                                    newValue
+                                }
+                            errorMessage = if (isValidInput || newValue.text == "") {
+                                ""
+                            } else {
+                                "Invalid word"
+                            }
+                        }
+
+                        showSuggestions = value.text.isNotEmpty()
+                    },
+                    modifier = Modifier
+                        .onKeyEvent { event ->
+                            return@onKeyEvent when (event.key.keyCode) {
+                                Key.Enter.keyCode, Key.Spacebar.keyCode -> {
+                                    if (hasInput && filteredSuggestions.size == 1) {
+                                        filteredSuggestions =
+                                            filterSuggestions(bip39Dictionary, value.text)
+                                        wordlist =
+                                            updateWordlist(wordlist, filteredSuggestions.first())
+                                        value = createEmptyValue()
+
+                                        showSuggestions = false
+                                    } else {
+                                        errorMessage = "Invalid word"
+                                    }
+
+                                    true
                                 }
 
-                                true
-                            }
-
-                            else -> {
-                                false
+                                else -> {
+                                    false
+                                }
                             }
                         }
-                    }
-                    .focusRequester(focusRequester)
-            )
+                        .focusRequester(focusRequester)
+                )
 
-            // Automatically request focus when the UI is composed
-            LaunchedEffect(Unit) {
-                focusRequester.requestFocus()
-            }
+                // Automatically request focus when the UI is composed
+                LaunchedEffect(Unit) {
+                    focusRequester.requestFocus()
+                }
 
-            Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(4.dp))
 
-            SuggestionView(
-                modifier = Modifier
-                    .fillMaxWidth(0.75f)
-                    .fillMaxHeight(0.33f),
-                visible = showSuggestions,
-                wordlist = wordlist,
-                suggestions = filteredSuggestions,
-                onHide = { showSuggestions = false }
-            ) { _, newWordlist ->
-                wordlist = newWordlist
-                value = createEmptyValue()
-            }
-
-            if (showSuggestions) {
-                Spacer(modifier = Modifier.height(8.dp))
-            }
-
-            Text("Word count: ${wordlist.size}")
-
-            if (informationMessage.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Text(informationMessage,
-                    color = MaterialTheme.colorScheme.error,
-                    textAlign = TextAlign.Center,
+                SuggestionView(
                     modifier = Modifier
-                        .fillMaxWidth().
-                        align(Alignment.CenterHorizontally))
-            }
+                        .fillMaxWidth(0.75f)
+                        .fillMaxHeight(0.33f),
+                    visible = showSuggestions,
+                    wordlist = wordlist,
+                    suggestions = filteredSuggestions,
+                    onHide = { showSuggestions = false }
+                ) { _, newWordlist ->
+                    wordlist = newWordlist
+                    value = createEmptyValue()
+                }
 
-            WordList(
-                wordlist = wordlist,
-                enabled = !hasValidSeed
-            ) { newWordlist -> wordlist = newWordlist }
+                if (showSuggestions) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
 
-            Spacer(modifier = Modifier.height(8.dp))
+                Text("Word count: ${wordlist.size}")
 
-            Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                Button(
-                    onClick = { wordlist = emptyArray() },
-                    enabled = !hasValidSeed && wordlist.isNotEmpty()
-                ) {
-                    Text("Reset")
-                    Icon(
-                        Icons.Default.RestartAlt,
-                        contentDescription = "Reset",
-                        modifier = Modifier.size(InputChipDefaults.AvatarSize)
+                if (informationMessage.isNotEmpty()) {
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Text(
+                        informationMessage,
+                        color = MaterialTheme.colorScheme.error,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxWidth().align(Alignment.CenterHorizontally)
                     )
                 }
-                Button(
-                    onClick = {
-                        process(wordlist, bip39Dictionary)
-                        hasValidSeed = true
-                    },
-                    enabled = !hasValidSeed && Bip39.validate(wordlist, bip39Dictionary)
-                ) {
-                    Text("Import")
-                    Icon(
-                        Icons.AutoMirrored.Filled.ArrowRightAlt,
-                        contentDescription = "Import",
-                        modifier = Modifier.size(InputChipDefaults.AvatarSize)
-                    )
+
+                WordList(
+                    wordlist = wordlist,
+                    enabled = !hasValidSeed
+                ) { newWordlist -> wordlist = newWordlist }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                    Button(
+                        onClick = { wordlist = emptyArray() },
+                        enabled = !hasValidSeed && wordlist.isNotEmpty()
+                    ) {
+                        Text("Reset")
+                        Icon(
+                            Icons.Default.RestartAlt,
+                            contentDescription = "Reset",
+                            modifier = Modifier.size(InputChipDefaults.AvatarSize)
+                        )
+                    }
+                    Button(
+                        onClick = {
+                            process(wordlist, bip39Dictionary)
+                            hasValidSeed = true
+                            errorMessage = ""
+                            informationMessage = ""
+                        },
+                        enabled = !hasValidSeed && Bip39.validate(wordlist, bip39Dictionary)
+                    ) {
+                        Text("Import")
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowRightAlt,
+                            contentDescription = "Import",
+                            modifier = Modifier.size(InputChipDefaults.AvatarSize)
+                        )
+                    }
                 }
             }
 
-            Spacer(modifier = Modifier.imePadding())
+            Spacer( modifier = Modifier.height(16.dp)
+            )
         }
     }
 }
