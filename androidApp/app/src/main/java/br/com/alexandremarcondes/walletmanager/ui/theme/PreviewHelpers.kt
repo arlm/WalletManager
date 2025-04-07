@@ -9,6 +9,10 @@ import androidx.compose.ui.tooling.preview.Wallpapers
 
 private const val defaultApiLevel = 34
 private const val oldApiLevel = 30
+
+private const val phoneDevice = Devices.PIXEL_7
+private const val tabletDevice = Devices.PIXEL_C
+
 /**
  * MultiPreview annotation that represents various phone presentation types like dark and light modes,
  * and all dynamic color variations.
@@ -19,7 +23,7 @@ private const val oldApiLevel = 30
 @Preview(
     name = "Phone Light",
     showSystemUi = true,
-    device = Devices.NEXUS_6,
+    device = phoneDevice,
     uiMode = Configuration.UI_MODE_NIGHT_NO or Configuration.UI_MODE_TYPE_NORMAL,
     wallpaper = Wallpapers.NONE,
     backgroundColor = 0xFFFFFF,
@@ -30,7 +34,7 @@ private const val oldApiLevel = 30
 @Preview(
     name = "Phone Dark",
     showSystemUi = true,
-    device = Devices.NEXUS_6,
+    device = phoneDevice,
     wallpaper = Wallpapers.NONE,
     uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL,
     backgroundColor = 0x000000,
@@ -40,7 +44,7 @@ private const val oldApiLevel = 30
 @Preview(
     name = "Phone Yellow Light",
     showSystemUi = true,
-    device = Devices.NEXUS_6,
+    device = phoneDevice,
     uiMode = Configuration.UI_MODE_NIGHT_NO or Configuration.UI_MODE_TYPE_NORMAL,
     wallpaper = Wallpapers.YELLOW_DOMINATED_EXAMPLE,
     backgroundColor = 0xebc934,
@@ -51,7 +55,7 @@ private const val oldApiLevel = 30
 @Preview(
     name = "Phone Yellow Dark",
     showSystemUi = true,
-    device = Devices.NEXUS_6,
+    device = phoneDevice,
     uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL,
     wallpaper = Wallpapers.YELLOW_DOMINATED_EXAMPLE,
     backgroundColor = 0xebc934,
@@ -62,7 +66,7 @@ private const val oldApiLevel = 30
 @Preview(
     name = "Phone Blue Light",
     showSystemUi = true,
-    device = Devices.NEXUS_6,
+    device = phoneDevice,
     uiMode = Configuration.UI_MODE_NIGHT_NO or Configuration.UI_MODE_TYPE_NORMAL,
     wallpaper = Wallpapers.BLUE_DOMINATED_EXAMPLE,
     backgroundColor = 0x349beb,
@@ -73,7 +77,7 @@ private const val oldApiLevel = 30
 @Preview(
     name = "Phone Blue Dark",
     showSystemUi = true,
-    device = Devices.NEXUS_6,
+    device = phoneDevice,
     uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL,
     wallpaper = Wallpapers.BLUE_DOMINATED_EXAMPLE,
     backgroundColor = 0x349beb,
@@ -84,7 +88,7 @@ private const val oldApiLevel = 30
 @Preview(
     name = "Phone Green Light",
     showSystemUi = true,
-    device = Devices.NEXUS_6,
+    device = phoneDevice,
     uiMode = Configuration.UI_MODE_NIGHT_NO or Configuration.UI_MODE_TYPE_NORMAL,
     wallpaper = Wallpapers.GREEN_DOMINATED_EXAMPLE,
     backgroundColor = 0x34eb83,
@@ -95,7 +99,7 @@ private const val oldApiLevel = 30
 @Preview(
     name = "Phone Green Dark",
     showSystemUi = true,
-    device = Devices.NEXUS_6,
+    device = phoneDevice,
     uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL,
     wallpaper = Wallpapers.GREEN_DOMINATED_EXAMPLE,
     backgroundColor = 0x34eb83,
@@ -106,7 +110,7 @@ private const val oldApiLevel = 30
 @Preview(
     name = "Phone Red Light",
     showSystemUi = true,
-    device = Devices.NEXUS_6,
+    device = phoneDevice,
     uiMode = Configuration.UI_MODE_NIGHT_NO or Configuration.UI_MODE_TYPE_NORMAL,
     wallpaper = Wallpapers.RED_DOMINATED_EXAMPLE,
     backgroundColor = 0xf07ab3,
@@ -117,7 +121,7 @@ private const val oldApiLevel = 30
 @Preview(
     name = "Phone Red Dark",
     showSystemUi = true,
-    device = Devices.NEXUS_6,
+    device = phoneDevice,
     uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL,
     wallpaper = Wallpapers.RED_DOMINATED_EXAMPLE,
     backgroundColor = 0xf07ab3,
@@ -137,7 +141,7 @@ annotation class AndroidPhonePreviews
 @Preview(
     name = "Tablet Light",
     showSystemUi = true,
-    device = Devices.PIXEL_C,
+    device = tabletDevice,
     uiMode = Configuration.UI_MODE_NIGHT_NO or Configuration.UI_MODE_TYPE_NORMAL,
     wallpaper = Wallpapers.NONE,
     backgroundColor = 0xFFFFFF,
@@ -148,7 +152,7 @@ annotation class AndroidPhonePreviews
 @Preview(
     name = "Tablet Dark",
     showSystemUi = true,
-    device = Devices.PIXEL_C,
+    device = tabletDevice,
     wallpaper = Wallpapers.NONE,
     uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL,
     backgroundColor = 0x000000,
@@ -166,7 +170,7 @@ annotation class AndroidTabletApi30Previews
 @Preview(
     name = "Tablet Yellow Light",
     showSystemUi = true,
-    device = Devices.PIXEL_C,
+    device = tabletDevice,
     uiMode = Configuration.UI_MODE_NIGHT_NO or Configuration.UI_MODE_TYPE_NORMAL,
     wallpaper = Wallpapers.YELLOW_DOMINATED_EXAMPLE,
     backgroundColor = 0xebc934,
@@ -177,7 +181,7 @@ annotation class AndroidTabletApi30Previews
 @Preview(
     name = "Tablet Yellow Dark",
     showSystemUi = true,
-    device = Devices.PIXEL_C,
+    device = tabletDevice,
     uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL,
     wallpaper = Wallpapers.YELLOW_DOMINATED_EXAMPLE,
     backgroundColor = 0xebc934,
@@ -188,7 +192,7 @@ annotation class AndroidTabletApi30Previews
 @Preview(
     name = "Tablet Blue Light",
     showSystemUi = true,
-    device = Devices.PIXEL_C,
+    device = tabletDevice,
     uiMode = Configuration.UI_MODE_NIGHT_NO or Configuration.UI_MODE_TYPE_NORMAL,
     wallpaper = Wallpapers.BLUE_DOMINATED_EXAMPLE,
     backgroundColor = 0x349beb,
@@ -199,7 +203,7 @@ annotation class AndroidTabletApi30Previews
 @Preview(
     name = "Tablet Blue Dark",
     showSystemUi = true,
-    device = Devices.PIXEL_C,
+    device = tabletDevice,
     uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL,
     wallpaper = Wallpapers.BLUE_DOMINATED_EXAMPLE,
     backgroundColor = 0x349beb,
@@ -210,7 +214,7 @@ annotation class AndroidTabletApi30Previews
 @Preview(
     name = "Tablet Green Light",
     showSystemUi = true,
-    device = Devices.PIXEL_C,
+    device = tabletDevice,
     uiMode = Configuration.UI_MODE_NIGHT_NO or Configuration.UI_MODE_TYPE_NORMAL,
     wallpaper = Wallpapers.GREEN_DOMINATED_EXAMPLE,
     backgroundColor = 0x34eb83,
@@ -221,7 +225,7 @@ annotation class AndroidTabletApi30Previews
 @Preview(
     name = "Tablet Green Dark",
     showSystemUi = true,
-    device = Devices.PIXEL_C,
+    device = tabletDevice,
     uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL,
     wallpaper = Wallpapers.GREEN_DOMINATED_EXAMPLE,
     backgroundColor = 0x34eb83,
@@ -232,7 +236,7 @@ annotation class AndroidTabletApi30Previews
 @Preview(
     name = "Tablet Red Light",
     showSystemUi = true,
-    device = Devices.PIXEL_C,
+    device = tabletDevice,
     uiMode = Configuration.UI_MODE_NIGHT_NO or Configuration.UI_MODE_TYPE_NORMAL,
     wallpaper = Wallpapers.RED_DOMINATED_EXAMPLE,
     backgroundColor = 0xf07ab3,
@@ -243,7 +247,7 @@ annotation class AndroidTabletApi30Previews
 @Preview(
     name = "Tablet Red Dark",
     showSystemUi = true,
-    device = Devices.PIXEL_C,
+    device = tabletDevice,
     uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL,
     wallpaper = Wallpapers.RED_DOMINATED_EXAMPLE,
     backgroundColor = 0xf07ab3,
@@ -271,6 +275,7 @@ annotation class AndroidTabletPreviews
     name = "Blue Light",
     wallpaper = Wallpapers.BLUE_DOMINATED_EXAMPLE,
     apiLevel = defaultApiLevel,
+    device = phoneDevice,
     backgroundColor = 0xebc934,
     showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_NO or Configuration.UI_MODE_TYPE_NORMAL
@@ -283,6 +288,7 @@ annotation class LightDynamicBluePreview
     name = "Yellow Light",
     wallpaper = Wallpapers.YELLOW_DOMINATED_EXAMPLE,
     apiLevel = defaultApiLevel,
+    device = phoneDevice,
     backgroundColor = 0x349beb,
     showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_NO or Configuration.UI_MODE_TYPE_NORMAL
@@ -295,6 +301,7 @@ annotation class LightDynamicYellowPreview
     name = "Green Light",
     wallpaper = Wallpapers.GREEN_DOMINATED_EXAMPLE,
     apiLevel = defaultApiLevel,
+    device = phoneDevice,
     backgroundColor = 0x34eb83,
     showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_NO or Configuration.UI_MODE_TYPE_NORMAL
@@ -307,6 +314,7 @@ annotation class LightDynamicGreenPreview
     name = "Red Light",
     wallpaper = Wallpapers.RED_DOMINATED_EXAMPLE,
     apiLevel = defaultApiLevel,
+    device = phoneDevice,
     backgroundColor = 0xf07ab3,
     showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_NO or Configuration.UI_MODE_TYPE_NORMAL
@@ -330,6 +338,7 @@ annotation class LightDynamicColorsPreview
     name = "Blue Dark",
     wallpaper = Wallpapers.BLUE_DOMINATED_EXAMPLE,
     apiLevel = defaultApiLevel,
+    device = phoneDevice,
     backgroundColor = 0xebc934,
     showBackground = true,
     group = "dark",
@@ -343,6 +352,7 @@ annotation class DarkDynamicBluePreview
     name = "Yellow Dark",
     wallpaper = Wallpapers.YELLOW_DOMINATED_EXAMPLE,
     apiLevel = defaultApiLevel,
+    device = phoneDevice,
     backgroundColor = 0x349beb,
     showBackground = true,
     group = "dark",
@@ -356,6 +366,7 @@ annotation class DarkDynamicYellowPreview
     name = "Green Dark",
     wallpaper = Wallpapers.GREEN_DOMINATED_EXAMPLE,
     apiLevel = defaultApiLevel,
+    device = phoneDevice,
     backgroundColor = 0x34eb83,
     showBackground = true,
     group = "dark",
@@ -369,6 +380,7 @@ annotation class DarkDynamicGreenPreview
     name = "Red Dark",
     wallpaper = Wallpapers.RED_DOMINATED_EXAMPLE,
     apiLevel = defaultApiLevel,
+    device = phoneDevice,
     backgroundColor = 0xf07ab3,
     showBackground = true,
     group = "dark",
@@ -401,6 +413,19 @@ annotation class LightAndDarkDynamicColorsPreview
 @Preview(
     name = "Light Mode",
     apiLevel = oldApiLevel,
+    showSystemUi = true,
+    device = phoneDevice,
+    backgroundColor = 0xFFFFFF,
+    showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_NO or Configuration.UI_MODE_TYPE_NORMAL
+)
+annotation class LightPhonePreview
+
+@Retention(value = AnnotationRetention.BINARY)
+@Target(allowedTargets = [AnnotationTarget.ANNOTATION_CLASS, AnnotationTarget.FUNCTION])
+@Preview(
+    name = "Light Mode",
+    apiLevel = oldApiLevel,
     backgroundColor = 0xFFFFFF,
     showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_NO or Configuration.UI_MODE_TYPE_NORMAL
@@ -412,7 +437,7 @@ annotation class LightModePreview
 @Preview(
     name = "Light Mode",
     apiLevel = oldApiLevel,
-    device = Devices.PIXEL_C,
+    device = tabletDevice,
     showSystemUi = true,
     backgroundColor = 0xFFFFFF,
     showBackground = true,
@@ -425,13 +450,27 @@ annotation class LightModeTabletPreview
 @Preview(
     name = "Light Mode",
     apiLevel = oldApiLevel,
-    device = Devices.NEXUS_6,
+    device = phoneDevice,
     showSystemUi = true,
     backgroundColor = 0xFFFFFF,
     showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_NO or Configuration.UI_MODE_TYPE_NORMAL
 )
 annotation class LightModePhonePreview
+
+@Retention(value = AnnotationRetention.BINARY)
+@Target(allowedTargets = [AnnotationTarget.ANNOTATION_CLASS, AnnotationTarget.FUNCTION])
+@Preview(
+    name = "Dark Mode",
+    apiLevel = oldApiLevel,
+    device = phoneDevice,
+    showSystemUi = true,
+    backgroundColor = 0x000000,
+    showBackground = true,
+    group = "dark",
+    uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL
+)
+annotation class DarkPhonePreview
 
 @Retention(value = AnnotationRetention.BINARY)
 @Target(allowedTargets = [AnnotationTarget.ANNOTATION_CLASS, AnnotationTarget.FUNCTION])
@@ -450,7 +489,7 @@ annotation class DarkModePreview
 @Preview(
     name = "Dark Mode",
     apiLevel = oldApiLevel,
-    device = Devices.PIXEL_C,
+    device = tabletDevice,
     backgroundColor = 0x000000,
     showBackground = true,
     showSystemUi = true,
@@ -464,7 +503,7 @@ annotation class DarkModeTabletPreview
 @Preview(
     name = "Dark Mode",
     apiLevel = oldApiLevel,
-    device = Devices.NEXUS_6,
+    device = phoneDevice,
     backgroundColor = 0x000000,
     showBackground = true,
     showSystemUi = true,
@@ -472,6 +511,15 @@ annotation class DarkModeTabletPreview
     uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL
 )
 annotation class DarkModePhonePreview
+
+/**
+ * MultiPreview annotation that represents API Levels 30 dark and light modes.
+ */
+@Retention(value = AnnotationRetention.BINARY)
+@Target(allowedTargets = [AnnotationTarget.ANNOTATION_CLASS, AnnotationTarget.FUNCTION])
+@LightPhonePreview
+@DarkPhonePreview
+annotation class LightAndDarkPhonePreview
 
 /**
  * MultiPreview annotation that represents API Levels 30 dark and light modes.

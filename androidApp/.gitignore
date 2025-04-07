@@ -7,6 +7,7 @@ local.properties
 .idea/workspace.xml
 .idea/navEditor.xml
 .idea/assetWizardSettings.xml
+.idea/inspectionProfiles
 .kotlin
 .idea/deploymentTargetSelector.xml
 .DS_Store

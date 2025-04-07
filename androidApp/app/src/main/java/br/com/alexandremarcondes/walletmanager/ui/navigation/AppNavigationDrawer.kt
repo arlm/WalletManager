@@ -12,6 +12,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import br.com.alexandremarcondes.walletmanager.MainApp
 import br.com.alexandremarcondes.walletmanager.ui.screens.BIP141Screen
 import br.com.alexandremarcondes.walletmanager.ui.screens.BIP32Screen
 import br.com.alexandremarcondes.walletmanager.ui.screens.BIP44Screen
@@ -60,7 +61,7 @@ fun AppNavigationDrawer(
                 SeedQRCreationScreen(drawerState = drawerState)
             }
             composable(MainRoute.BIP32.name) {
-                BIP32Screen(drawerState = drawerState)
+                BIP32Screen(drawerState = drawerState, MainApp.memory.bip39)
             }
             composable(MainRoute.BIP44.name) {
                 BIP44Screen(drawerState = drawerState)
